@@ -1,0 +1,63 @@
+body{
+    
+    text-align: center;
+    }
+    
+    .small-pizza{
+        background-color:#f8e430;
+        margin: 1em;
+        padding: 1em;
+        border-radius: 0.5em;
+    }
+    
+    .medium-pizza{
+        background-color: #f9df1a;
+        margin: 1em;
+        padding: 1em;
+        border-radius: 0.5em;
+    
+    }
+    
+    
+    .large-pizza{
+        background-color: #fedf10cd;
+        margin: 1em;
+        padding: 1em;
+        border-radius: 0.5em;
+    }
+    
+    
+    .contact{
+        background-color: hsla(23, 93%, 49%, 0.953);
+        margin: 1em;
+        padding: 1em;
+    }
+    
+    
+    @media (min-width:960px){
+        .pizza{
+            border-radius: 0.5em;
+            display: flex;
+            border: bold solid;
+        }
+           
+    }
+    
+    h1{
+        text-align: center;
+    }
+    
+    .contact{
+        text-align: center;
+    }
+    
+    body{
+        background-color: #320a4ba3;
+        text-align: center;
+    }
+    .cart{
+        background-color: hsla(23, 93%, 49%, 0.953);
+        margin: 1em;
+        padding: 1em;
+    }
+
