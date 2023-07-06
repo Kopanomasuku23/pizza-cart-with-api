@@ -12,10 +12,10 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
+<body x-data="pizzaCartWithAPIWidget">
   <!-- <div x-show="show"> -->
-  <main class="class=" container text-center"
-    x-data="{Total:0, counter:0, pepperoniPizza:0, chickenPizza:0, mushroomPizza:0, totalpaymentAmount:0, checkoutMessage:'', show:false, displayError:''}">
+  <main class="container text-center"
+    x-data="{Total:0, chickenPizza:0, mushroomPizza:0, totalpaymentAmount:0, checkoutMessage:'', show:false, displayError:''}">
 
     <h1>Kopano Pizza Perfect</h1>
 
@@ -23,29 +23,111 @@
     <div class="cart">
 
 
-      <span><b>Shopping Cart</b> </span><span x-text="counter"></span> <br>
-      <div>
+      <h3><b>Shopping Cart</b> </h3>
+
+    <span>Cart ID: </span><span x-text="cart_id"></span><br>
+    <!-- <label>Username </label> -->
+    <!-- <input type="text" placeholder="Enter you username" x-model="username"><br> -->
+
+      <span x-text="counter"></span><span> Item(s)</span><br>
+      <div x-show="open && cart.total.toFixed(2)>0">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Flavour</th>
+              <th scope="col">Type</th>
+              <th scope="col">Size</th>
+              <th scope="col">Price</th>
+              <th scope="col">Add item to cart</th>
+              <th scope="col">QTY</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr x-show="pepperoniPizza > 0">
+              <td>Creamy Tikka Veg</td>
+              <td >pepperoni Pizza</td>
+              <td >small</td>
+              <td >R78</td>
+              <td><button class="btn btn-warning" @click="(counter++), (pepperoniPizza++), (cart.total+=78)">+</button>
+                <button class="btn btn-warning" x-on:click="if(pepperoniPizza > 0){(counter--), (pepperoniPizza--), (cart.total-=78)}">-</button>
+              </td>
+              <td x-text="pepperoniPizza"></td>
+            </tr> -->
+
+            <template x-for="pizza in cart.pizzas">
+              <tr>
+                <td x-text="pizza.flavour"></td>
+                <td x-text="pizza.type"></td>
+                <td x-text="pizza.size"></td>
+                <td x-text="pizza.price"></td>
+                <td><button class="btn btn-warning" x-on:click="buyPizza(pizza)">+</button>
+                  <button class="btn btn-warning" x-on:click="removePizza(pizza)">-</button>
+                </td>
+                <td x-text="pizza.qty"></td>
+              </tr>  
+            </template>
+            
+           <tr>
+              <td></td>
+              <td></td>
+              <td>Total</td>
+              <td><span x-text="cart.total.toFixed(2)"></span></td>
+              <td>
+                  <button x-show="!makePayment" x-on:click="makePayment=true">Checkout</button>
+              </td>
+              <td></td>
+          </tr>
+          
+          <tr x-show="makePayment">
+              <td colspan="6">
+                  <div>
+                    <template x-if="checkOutMessage=='Enjoy your pizza'">
+                      <div class="alert alert-success">
+                          <p x-text="checkOutMessage"></p>
+                          <span>Your change is: R</span><span x-text="change"></span>
+                      </div>
+                      
+                  </template>
+  
+                  <template x-if="checkOutMessage== 'Sorry, That is not enough money!'">
+                      <p class="alert alert-danger" x-text="checkOutMessage"></p>
+                  </template>
+                      <div>
+                          <label >Enter Amount</label>
+                          <input class="form-control-sm" type="number" placeholder="Enter Amount" x-model="Amount" />
+                          <button x-on:click="payment" class="">Pay</button>
+                      </div>
+                  </div>
+  
+              </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div x-show="pepperoniPizza > 0">
+
         <p>Small</p><span x-text="pepperoniPizza"></span>
-        <button type="button" class="btn btn-warning" @click="(counter++), (pepperoniPizza++), (Total+=78)">+</button>
+        <button type="button" class="btn btn-warning" >+</button>
         <button type="button" class="btn btn-warning"
-          @click="if(pepperoniPizza > 0){(counter--), (pepperoniPizza--), (Total-=78)}">-</button>
+          @click="">-</button>
       </div>
 
-      <div>
+      <div x-show="chickenPizza > 0">
         <p>Medium</p><span x-text="chickenPizza"></span>
         <button type="button" class="btn btn-warning" @click="(counter++), (chickenPizza++), (Total+=98)">+</button>
         <button type="button" class="btn btn-warning"
           @click="if(chickenPizza > 0){(counter--), (chickenPizza--), (Total-=98)}">-</button>
       </div>
 
-      <div>
+      <div x-show="mushroomPizza > 0">
         <p>Large</p><span x-text="mushroomPizza"></span>
         <button type="button" class="btn btn-warning" @click="(counter++), (mushroomPizza++), (Total+=189)">+</button>
         <button type="button" class="btn btn-warning"
           @click="if(mushroomPizza > 0){(counter--), (mushroomPizza--), (Total-=189)}">-</button>
-      </div>
+      </div> -->
 
-      <span>Total </span><span x-text="Total"></span>
+      <!-- <span>Total </span><span x-text="Total"></span> -->
 
       <div>
 
@@ -54,8 +136,8 @@
           <p x-text="displayError"></p>
         </div>
 
-        <button x-show="Total > 0"
-          @click="if(Total > 0){show=!show}else{displayError='Sorry your cart is empty, please add items to cart'}">Checkout</button>
+        <!-- <button x-show="Total > 0"
+          @click="if(Total > 0){show=!show}else{displayError='Sorry your cart is empty, please add items to cart'}">Checkout</button> -->
         <div x-show="show">
           <label>Payment Amount</label>
 
@@ -79,7 +161,7 @@
           Tikka sauce, BBQ Bacon, BBQ Sauce, Pepperoni and Olive, Spicy Chicken,
           Mexican Sauce.
         </p>
-        <button type="button" class="btn btn-dark" @click="(counter++), (pepperoniPizza++), (Total+=78)">Buy</button>
+        <button type="button" class="btn btn-dark" @click="(pepperoniPizza++), (Total+=78)">Buy</button>
       </div>
 
       <div class="medium-pizza">
@@ -91,7 +173,7 @@
           Tikka sauce, BBQ Bacon, BBQ Sauce, Pepperoni and Olive, Spicy Chicken,
           Mexican Sauce.
         </p>
-        <button type="button" class="btn btn-dark" @click="(counter++), (chickenPizza++), (Total+=98)">Buy</button>
+        <button type="button" class="btn btn-dark" @click="(chickenPizza++), (Total+=98)">Buy</button>
       </div>
 
       <div class="large-pizza">
@@ -104,10 +186,13 @@
           Tikka sauce, BBQ Bacon, BBQ Sauce, Pepperoni and Olive, Spicy Chicken,
           Mexican Sauce.
         </p>
-        <button type="button" class="btn btn-dark" @click="(counter++), (mushroomPizza++), (Total+=189)">Buy</button>
+        <button type="button" class="btn btn-dark" @click="(mushroomPizza++), (Total+=189)">Buy</button>
       </div>
     </div>
-    <div class="container" x-data="pizzaCartWithAPIWidget">
+    <div class="container" >
+
+      
+
 
       <table class="table">
         <thead>
@@ -127,7 +212,7 @@
               <td x-text="pizza.type"></td>
               <td x-text="pizza.size"></td>
               <td x-text="pizza.price"></td>
-              <td><button>Buy</button></td>
+              <td><button x-on:click="buyPizza(pizza)">Buy</button></td>
 
 
               
