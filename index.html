@@ -85,7 +85,7 @@
                     <template x-if="checkOutMessage=='Enjoy your pizza'">
                       <div class="alert alert-success">
                           <p x-text="checkOutMessage"></p>
-                          <span>Your change is: R</span><span x-text="change"></span>
+                          <span>Your change is: R</span><span x-text="change.toFixed(2)"></span>
                       </div>
                       
                   </template>
