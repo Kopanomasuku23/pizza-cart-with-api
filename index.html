@@ -15,7 +15,7 @@
 <body x-data="pizzaCartWithAPIWidget">
   <!-- <div x-show="show"> -->
   <main class="container text-center"
-    x-data="{Total:0, chickenPizza:0, mushroomPizza:0, totalpaymentAmount:0, checkoutMessage:'', show:false, displayError:''}">
+    x-data="{Total:0,  chickenPizza:0, mushroomPizza:0, totalpaymentAmount:0, checkoutMessage:'', show:false, displayError:''}">
 
     <h1>Kopano Pizza Perfect</h1>
 
@@ -25,11 +25,19 @@
 
       <h3><b>Shopping Cart</b> </h3>
 
-    <span>Cart ID: </span><span x-text="cart_id"></span><br>
+    <span>Cart ID: </span><span x-text="cartId"></span><br>
     <!-- <label>Username </label> -->
     <!-- <input type="text" placeholder="Enter you username" x-model="username"><br> -->
 
-      <span x-text="counter"></span><span> Item(s)</span><br>
+      <div>username: <span x-text="username"></span></div>
+
+      
+      
+
+      <div x-show="counter > 0">
+        <span x-text="counter" ></span><span> Item(s)</span>
+      </div>
+      
       <div x-show="open && cart.total.toFixed(2)>0">
         <table class="table">
           <thead>
@@ -49,8 +57,8 @@
               <td >pepperoni Pizza</td>
               <td >small</td>
               <td >R78</td>
-              <td><button class="btn btn-warning" @click="(counter++), (pepperoniPizza++), (cart.total+=78)">+</button>
-                <button class="btn btn-warning" x-on:click="if(pepperoniPizza > 0){(counter--), (pepperoniPizza--), (cart.total-=78)}">-</button>
+              <td><button class="btn btn-warning"  @click="(counter++), (pepperoniPizza++), (cart.total+=78)">+</button>
+                <button class="btn btn-warning"  x-on:click="if(pepperoniPizza > 0){(counter--), (pepperoniPizza--), (cart.total-=78)}">-</button>
               </td>
               <td x-text="pepperoniPizza"></td>
             </tr> -->
@@ -61,8 +69,8 @@
                 <td x-text="pizza.type"></td>
                 <td x-text="pizza.size"></td>
                 <td x-text="pizza.price"></td>
-                <td><button class="btn btn-warning" x-on:click="buyPizza(pizza)">+</button>
-                  <button class="btn btn-warning" x-on:click="removePizza(pizza)">-</button>
+                <td><button class="btn btn-warning"  x-on:click="buyPizza(pizza)">+</button>
+                  <button class="btn btn-warning"  x-on:click="removePizza(pizza)">-</button>
                 </td>
                 <td x-text="pizza.qty"></td>
               </tr>  
@@ -96,7 +104,7 @@
                       <div>
                           <label >Enter Amount</label>
                           <input class="form-control-sm" type="number" placeholder="Enter Amount" x-model="Amount" />
-                          <button x-on:click="payment" class="">Pay</button>
+                          <button  x-on:click="payment" class="">Pay</button>
                       </div>
                   </div>
   
@@ -105,6 +113,19 @@
           </tbody>
         </table>
       </div>
+
+
+      <button x-on:click="openHistory=!openHistory">History</button>
+      <!-- user history -->
+      <template x-for="cart in userHistory">
+        <div x-show="openHistory">
+        <p x-text="cart.id"></p>
+        <p x-text="cart.cart_code"></p>
+        <p x-text="cart.username"></p>
+        <p x-text="cart.status"></p>
+      </div>
+      </template>
+
       <!-- <div x-show="pepperoniPizza > 0">
 
         <p>Small</p><span x-text="pepperoniPizza"></span>
