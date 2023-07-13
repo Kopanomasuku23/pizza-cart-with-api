@@ -1,6 +1,8 @@
 document.addEventListener('alpine:init', () => {
   Alpine.data('pizzaCartWithAPIWidget', function () {
       return {
+          showCart: false,
+          hideCart: false,
           openHistory: false,
           pepperoniPizza:0,
           username: 'Kopano',
