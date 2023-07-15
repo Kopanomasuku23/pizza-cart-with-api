@@ -5,9 +5,10 @@ body{
     
     .small-pizza{
         background-color:#f8e430;
-        margin: 1em;
-        padding: 1em;
+        margin: 5px;
+        padding: 0.5em;
         border-radius: 0.5em;
+        flex: 1;
     }
     
     .medium-pizza{

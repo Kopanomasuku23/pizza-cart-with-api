@@ -19,43 +19,39 @@
 
     <h1>Kopano Pizza Perfect</h1>
 
-    <button x-on:click="openHistory=!openHistory">View history</button>
-    <!-- user history -->
-    <template x-for="cart in userHistory">
-      <div x-show="openHistory">
-        <p x-text="cart.id"></p>
-        <p x-text="cart.cart_code"></p>
-        <p x-text="cart.username"></p>
-        <p x-text="cart.status"></p>
+
+
+
+    <button x-on:click="hideCart=!hideCart" x-show="open && cart.total.toFixed(2)>0">Show cart</button>
+
+    <label x-show="!username">User</label>
+      <input x-model="name" placeholder="Enter username" class="form-control-sm" x-show="!username" />
+      <button @click="(username=name), (login())" x-show="!username">Login</button>
+      <button @click="logout()" x-show="username && cartId">Logout</button>
+      <a href="history.html" x-show="username && cartId">History</a>
+
+      
+      <br><br>
+
+      <div x-show="username && cartId">
+        <span>Cart id: </span><span x-text="localStorage['cartId']"></span><br>
+
+
+        username: <span x-text="localStorage['username']"></span>
       </div>
-    </template>
 
-    <button x-on:click="if(counter > 0){hideCart=!hideCart}">Show cart</button>
-
-
-    <span x-text="counter"></span><span> Item(s)</span><br>
-    <div>
-     <br> <span>Cart ID: </span><span x-text="cartId"></span><br>
-      <!-- <label>Username </label> -->
-      <!-- <input type="text" placeholder="Enter you username" x-model="username"><br> -->
-
-      <div>username: <span x-text="username"></span></div>
-    </div>
 
 
     <div class="cart" x-show="hideCart">
 
       <h3><b>Shopping Cart</b> </h3>
 
-      <div x-show="counter > 0">
-
-      </div>
-
-      <div x-show="open && cart.total.toFixed(2)>0">
+      <div>
         <table class="table">
           <thead>
             <tr>
               <th scope="col">Flavour</th>
+              <hr>
               <th scope="col">Type</th>
               <th scope="col">Size</th>
               <th scope="col">Price</th>
@@ -65,16 +61,6 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr x-show="pepperoniPizza > 0">
-              <td>Creamy Tikka Veg</td>
-              <td >pepperoni Pizza</td>
-              <td >small</td>
-              <td >R78</td>
-              <td><button class="btn btn-warning"  @click="(counter++), (pepperoniPizza++), (cart.total+=78)">+</button>
-                <button class="btn btn-warning"  x-on:click="if(pepperoniPizza > 0){(counter--), (pepperoniPizza--), (cart.total-=78)}">-</button>
-              </td>
-              <td x-text="pepperoniPizza"></td>
-            </tr> -->
 
             <template x-for="pizza in cart.pizzas">
               <tr>
@@ -106,7 +92,7 @@
                   <template x-if="checkOutMessage=='Enjoy your pizza'">
                     <div class="alert alert-success">
                       <p x-text="checkOutMessage"></p>
-                      <span>Your change is: R</span><span x-text="change.toFixed(2)"></span>
+                      <span>Change is: R</span><span x-text="change.toFixed(2)"></span>
                     </div>
 
                   </template>
@@ -126,33 +112,6 @@
           </tbody>
         </table>
       </div>
-
-
-     
-
-      <!-- <div x-show="pepperoniPizza > 0">
-
-        <p>Small</p><span x-text="pepperoniPizza"></span>
-        <button type="button" class="btn btn-warning" >+</button>
-        <button type="button" class="btn btn-warning"
-          @click="">-</button>
-      </div>
-
-      <div x-show="chickenPizza > 0">
-        <p>Medium</p><span x-text="chickenPizza"></span>
-        <button type="button" class="btn btn-warning" @click="(counter++), (chickenPizza++), (Total+=98)">+</button>
-        <button type="button" class="btn btn-warning"
-          @click="if(chickenPizza > 0){(counter--), (chickenPizza--), (Total-=98)}">-</button>
-      </div>
-
-      <div x-show="mushroomPizza > 0">
-        <p>Large</p><span x-text="mushroomPizza"></span>
-        <button type="button" class="btn btn-warning" @click="(counter++), (mushroomPizza++), (Total+=189)">+</button>
-        <button type="button" class="btn btn-warning"
-          @click="if(mushroomPizza > 0){(counter--), (mushroomPizza--), (Total-=189)}">-</button>
-      </div> -->
-
-      <!-- <span>Total </span><span x-text="Total"></span> -->
 
       <div>
 
@@ -176,45 +135,24 @@
 
     </div>
 
-    <div class="pizza">
-      <div class="small-pizza">
-        <h2>Small Pizza</h2>
-        <img src="images/pizza perfect.jpg" alt="" width="150" />
-        <h3>R78.00</h3>
-        <p>
-          Creamy Tikka Veg, Cream cheese base, mush room diced, diced tomato,
-          Tikka sauce, BBQ Bacon, BBQ Sauce, Pepperoni and Olive, Spicy Chicken,
-          Mexican Sauce.
-        </p>
-        <button type="button" class="btn btn-dark" @click="(pepperoniPizza++), (Total+=78)">Buy</button>
-      </div>
+    <div class="pizza row text-center">
+      <template x-for="pizza in featuredpizzasList.pizzas">
+        <div class="small-pizza col-md-3">
+          <h2 x-text="pizza.flavour"></h2>
+          <img src="images/pizza perfect.jpg" alt="" width="150" />
+          <h3 x-text="pizza.price"></h3>
+          <span x-text="pizza.size"></span><br>
+          <p x-text="pizza.type">
+          </p>
+          <button type="button" class="btn btn-dark" @click="buyPizza(pizza)">Buy</button>
+        </div>
+      </template>
+      
 
-      <div class="medium-pizza">
-        <h2>Medium Pizza</h2>
-        <img src="images/pizza perfect.jpg" alt="" width="175" />
-        <h3>R98.00</h3>
-        <p>
-          Creamy Tikka Veg, Cream cheese base, mush room diced, diced tomato,
-          Tikka sauce, BBQ Bacon, BBQ Sauce, Pepperoni and Olive, Spicy Chicken,
-          Mexican Sauce.
-        </p>
-        <button type="button" class="btn btn-dark" @click="(chickenPizza++), (Total+=98)">Buy</button>
-      </div>
-
-      <div class="large-pizza">
-
-        <h2>Large Pizza</h2>
-        <img src="images/pizza perfect.jpg" alt="" width="225" />
-        <h3>R189.00</h3>
-        <p>
-          Creamy Tikka Veg, Cream cheese base, mush room diced, diced tomato,
-          Tikka sauce, BBQ Bacon, BBQ Sauce, Pepperoni and Olive, Spicy Chicken,
-          Mexican Sauce.
-        </p>
-        <button type="button" class="btn btn-dark" @click="(mushroomPizza++), (Total+=189)">Buy</button>
-      </div>
     </div>
-    <div class="container">
+
+
+    <div class="container" x-show="username && cartId">
 
 
 
@@ -227,6 +165,7 @@
             <th scope="col">Size</th>
             <th scope="col">Price</th>
             <th scope="col">Add item to cart</th>
+            <th>Feature</th>
           </tr>
         </thead>
         <tbody>
@@ -238,6 +177,9 @@
               <td x-text="pizza.size"></td>
               <td x-text="pizza.price"></td>
               <td><button x-on:click="buyPizza(pizza)">Buy</button></td>
+              <td>
+                <button @click="postfeaturedPizzas(pizza.id)">feature</button>
+              </td>
 
 
 
@@ -256,7 +198,7 @@
 
       <p>info@perfect_pizza.com</p>
 
-      <p>Address: Shop 5, Campus Square, Cnr. Kingsway & Unversity Rd,Auckland Park, Johannesburg, 2092</p>
+      <p>Address: Shop 5, Campus Square, Cnr. Kingsway & University Rd,Auckland Park, Johannesburg, 2092</p>
     </div>
   </main>
 
