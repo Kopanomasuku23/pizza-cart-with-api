@@ -15,14 +15,14 @@
 <body x-data="pizzaCartWithAPIWidget">
   <!-- <div x-show="show"> -->
   <main class="container text-center"
-    x-data="{Total:0,  chickenPizza:0, mushroomPizza:0, totalpaymentAmount:0, checkoutMessage:'', show:false, displayError:''}">
+    x-data="{Total:0, chickenPizza:0, mushroomPizza:0, totalpaymentAmount:0, checkoutMessage:'', show:false, displayError:''}">
 
     <h1>Kopano Pizza Perfect</h1>
 
 
 
 
-    <button x-on:click="hideCart=!hideCart" x-show="open && cart.total.toFixed(2)>0">Show cart</button>
+    <button x-on:click="hideCart=!hideCart" x-show="open && cart.total.toFixed(2) > 0 && username && cartId">Show cart</button>
 
     <label x-show="!username">User</label>
       <input x-model="name" placeholder="Enter username" class="form-control-sm" x-show="!username" />
@@ -34,15 +34,15 @@
       <br><br>
 
       <div x-show="username && cartId">
-        <span>Cart id: </span><span x-text="localStorage['cartId']"></span><br>
+        <span>Cart id: </span><span x-text="cartId"></span><br>
 
 
-        username: <span x-text="localStorage['username']"></span>
+        username: <span x-text="username"></span>
       </div>
 
 
 
-    <div class="cart" x-show="hideCart">
+    <div class="cart" x-show="hideCart && cart.total.toFixed(2)> 0 && username && cartId">
 
       <h3><b>Shopping Cart</b> </h3>
 
@@ -51,7 +51,6 @@
           <thead>
             <tr>
               <th scope="col">Flavour</th>
-              <hr>
               <th scope="col">Type</th>
               <th scope="col">Size</th>
               <th scope="col">Price</th>
@@ -135,7 +134,7 @@
 
     </div>
 
-    <div class="pizza row text-center">
+    <div class="pizza row text-center" x-show="username && cartId">
       <template x-for="pizza in featuredpizzasList.pizzas">
         <div class="small-pizza col-md-3">
           <h2 x-text="pizza.flavour"></h2>
@@ -154,9 +153,6 @@
 
     <div class="container" x-show="username && cartId">
 
-
-
-
       <table class="table">
         <thead>
           <tr>
@@ -165,7 +161,7 @@
             <th scope="col">Size</th>
             <th scope="col">Price</th>
             <th scope="col">Add item to cart</th>
-            <th>Feature</th>
+            <th>feature</th>
           </tr>
         </thead>
         <tbody>
@@ -198,7 +194,7 @@
 
       <p>info@perfect_pizza.com</p>
 
-      <p>Address: Shop 5, Campus Square, Cnr. Kingsway & University Rd,Auckland Park, Johannesburg, 2092</p>
+      <p>Address: Shop 5, Campus Square, Cnr. Kingsway & Unversity Rd,Auckland Park, Johannesburg, 2092</p>
     </div>
   </main>
 
