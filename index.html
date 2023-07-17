@@ -17,27 +17,27 @@
   <main class="container text-center"
     x-data="{Total:0, chickenPizza:0, mushroomPizza:0, totalpaymentAmount:0, checkoutMessage:'', show:false, displayError:''}">
 
-    <h1>Kopano Pizza Perfect</h1>
+    <h1>Kopano's Pizza Perfect</h1>
 
 
 
 
-    <button x-on:click="hideCart=!hideCart" x-show="open && cart.total.toFixed(2) > 0 && username && cartId">Show cart</button>
+    <button class="btn btn-dark" x-on:click="hideCart=!hideCart" x-show="open && cart.total.toFixed(2) > 0 && username && cartId">Show cart</button>
 
-    <label x-show="!username">User</label>
+    <label class="box" x-show="!username">User: </label>
       <input x-model="name" placeholder="Enter username" class="form-control-sm" x-show="!username" />
-      <button @click="(username=name), (login())" x-show="!username">Login</button>
-      <button @click="logout()" x-show="username && cartId">Logout</button>
-      <a href="history.html" x-show="username && cartId">History</a>
+      <button class="btn btn-dark" @click="(username=name), (login())" x-show="!username">Login</button>
+      <button @click="logout()" class="btn btn-dark" x-show="username && cartId">Logout</button>
+      <a href="history.html" class="btn btn-dark" x-show="username && cartId">History</a>
 
       
       <br><br>
 
       <div x-show="username && cartId">
-        <span>Cart id: </span><span x-text="cartId"></span><br>
-
-
-        username: <span x-text="username"></span>
+        <div class="box">
+          <span class="span">Cart id: </span><span class="span" x-text="cartId"></span><br>
+          <span class="span">username:</span> <span class="span" x-text="username"></span>
+        </div>
       </div>
 
 
@@ -67,8 +67,8 @@
                 <td x-text="pizza.type"></td>
                 <td x-text="pizza.size"></td>
                 <td x-text="pizza.price"></td>
-                <td><button class="btn btn-warning" x-on:click="buyPizza(pizza)">+</button>
-                  <button class="btn btn-warning" x-on:click="removePizza(pizza)">-</button>
+                <td><button class="btn btn-dark" x-on:click="buyPizza(pizza)">+</button>
+                  <button class="btn btn-dark" x-on:click="removePizza(pizza)">-</button>
                 </td>
                 <td x-text="pizza.qty"></td>
               </tr>
@@ -80,7 +80,7 @@
               <td>Total</td>
               <td><span x-text="cart.total.toFixed(2)"></span></td>
               <td>
-                <button x-show="!makePayment" x-on:click="makePayment=true">Checkout</button>
+                <button class="btn btn-dark" x-show="!makePayment" x-on:click="makePayment=true">Checkout</button>
               </td>
               <td></td>
             </tr>
@@ -102,7 +102,7 @@
                   <div>
                     <label>Enter Amount</label>
                     <input class="form-control-sm" type="number" placeholder="Enter Amount" x-model="Amount" />
-                    <button x-on:click="payment" class="">Pay</button>
+                    <button x-on:click="payment" class="btn btn-dark">Pay</button>
                   </div>
                 </div>
 
@@ -126,7 +126,7 @@
 
           <input type="number" x-model="totalpaymentAmount">
 
-          <button
+          <button class="btn btn-dark"
             @click="if(totalpaymentAmount >= Total){checkoutMessage ='Enjoy your pizzas';Total=0, counter=0, pepperoniPizza=0, chickenPizza=0, mushroomPizza=0, totalpaymentAmount=0} else{checkoutMessage='Sorry-that is not enough money!',setTimeout(function(){checkoutMessage=''},3000)}">Pay</button>
         </div>
 
@@ -172,9 +172,9 @@
               <td x-text="pizza.type"></td>
               <td x-text="pizza.size"></td>
               <td x-text="pizza.price"></td>
-              <td><button x-on:click="buyPizza(pizza)">Buy</button></td>
+              <td><button class="btn btn-dark" x-on:click="buyPizza(pizza)">Buy</button></td>
               <td>
-                <button @click="postfeaturedPizzas(pizza.id)">feature</button>
+                <button class="btn btn-dark" @click="postfeaturedPizzas(pizza.id)">feature</button>
               </td>
 
 

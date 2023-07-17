@@ -1,8 +1,19 @@
 body{
-    
+   background-image: url(images/Background\ image.jpg);
     text-align: center;
     }
-    
+
+    .history-cart {
+        color: white;
+        
+    }
+
+    .text-center {
+        background-color: burlywood;
+        padding: 1rem;
+    }
+
+    h1{color: white;}
     .small-pizza{
         background-color:#f8e430;
         margin: 5px;
@@ -27,14 +38,29 @@ body{
         border-radius: 0.5em;
     }
     
-    
+    .btn-dark{
+        border: 1px solid white;
+    }
+    .btn-dark:hover{
+        border: 1px solid rgb(0, 0, 0);
+        color: black;
+        background-color: white;
+        font-weight: bold;
+    }
     .contact{
         background-color: hsla(23, 93%, 49%, 0.953);
         margin: 1em;
         padding: 1em;
     }
-    
-    
+    .box{
+        background-color: black;
+        color: white;
+        font-weight: bold;
+    }
+    .span{
+        color: white;
+        font-weight: bold;
+    }
     @media (min-width:960px){
         .pizza{
             border-radius: 0.5em;

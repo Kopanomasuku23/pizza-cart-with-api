@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="history-cart">
     <div x-data="historicalWidget">
         <div class="container">
             <br>
@@ -28,19 +28,20 @@
                     <!-- user history -->
                     <template x-for="cart in userHistory">
                         <div x-show="openHistory">
-                        <p x-text="cart.id"></p>
+                        <p x-text=" cart.id"></p>
                         <p x-text="cart.cart_code"></p>
                         <p x-text="cart.username"></p>
                         <p x-text="cart.status"></p>
-                        </div>
-                    </template>
+                    </div>
+                </template>
 
                 <template x-for="cart in showUserHistory">
                     <div>
-                        <p x-text="cart.id"></p>
-                        <p x-text="cart.cart_code"></p>
-                        <p x-text="cart.username"></p>
-                        <p x-text="cart.status"></p><br>
+                       <p><span><b>Cart Id: </b></span> <span x-text="cart.id"></span></p>
+                        <p><span><b>Cart code:</b></span> <span x-text="cart.cart_code"></span></p>
+                        <p><span><b>Username: </b></span><span x-text="cart.username"></span></p>
+                        <p><span><b>Status: </b></span><span x-text="cart.status"></span></p>
+                       <br>
                     </div>
                 </template>
             </div>
